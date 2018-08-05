@@ -1,0 +1,47 @@
+group 'com.rajeevn'
+version '1.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+def seleniumVersion = '3.11.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-ie-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver',version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-support', version:seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-safari-driver', version:seleniumVersion
+
+    // https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit
+    compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.11.0.201803080745-r'
+
+}
+
+jar {
+    manifest {
+        attributes 'Class-Path': configurations.compile.collect { 'lib/' + it.getName() }.join(' ')
+        attributes "Main-Class": "com.rajeevn.assistant.Main"
+    }
+}
+
+task copyRuntimeLibs(type: Copy) {
+    into "$buildDir/libs/lib"
+    from configurations.testRuntime
+}
+
+jar.dependsOn(copyRuntimeLibs)

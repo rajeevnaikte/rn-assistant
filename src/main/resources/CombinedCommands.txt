@@ -1,0 +1,175 @@
+***open ${:jiraid#1:1} my-app
+open url 'http://localhost:4${cmd in this extract text with match '(\d+)'}/'
+login to my-app with user 'rajeevn' and password 'rajeevn'
+***
+***Login to dev2 my-app with ${user#2:1,2;} user
+***Login to dev2 my-app
+***Login to ${url#1:1} my-app
+open url 'http://my-app.dev2.myCompany.com/'
+login to my-app with user 'rajeevn' and password 'rajeevn'
+***
+***login to my-app with user ${user#1:1} and password ${pass#2:1}
+input 'rajeevn' into web element '//input[@name="ID"]'
+input 'rajeevn' into web element '//input[@name="PASSWORD"]'
+click web element '//*[@id="submitButton"]'
+***
+***open vic for ${vehicle#2:1;} in dev2 my-app
+login to dev2 my-app with 'rajeevn' user
+open vic for vehicle '123456'
+***
+***open vic for vehicle ${vehicle#2:1}
+Open 'Vehicle Info' menu
+input '569841' into web element '//input[@name="myCompanyVehicleTextBox"]'
+click web element '//a[@id="submitButton2"]/nobr[.="Search"]'
+***
+***Login to stage my-app with ${user#2:1,2;} user
+***Login to stage my-app
+open url 'http://my-app.stage.myCompany.com/'
+login to my-app with user 'rajeevn' and password 'rajeevn'
+***
+***open vic for ${vehicle#2:1;} in stage my-app
+login to stage my-app with 'rajeevn' user
+open vic for vehicle '123456'
+***
+***open vehicle inventory for vehicle ${vehicle#2:1} in ${url#1:1}
+login to 'http://localhost:41904/' my-app
+open vehicle inventory for '454545'
+***
+***open vehicle inventory for vehicle ${vehicle#2:1}
+Open 'vehicle inventory' menu
+input '142785' into web element '//input[@name="vehicle"]'
+click web element '//a/nobr[.="GO"]'
+***
+***Open ${menu#1:1} menu
+input 'vehicle inventory' into web element '//input[starts-with(@id,"mamy-appSearch-")]'
+sleep for '1' second
+wait for invisibility of web element '//div[@aria-valuetext="Loading..."]'
+click web element '//div[contains(@class,"x-boundlist")]//li/span[contains(@class,"ma-search-menu-items")]'
+click web element '//div[contains(@class,"x-window-header")]//*[contains(@class,"x-tool-maximize")]'
+***
+***open dev2 for RN-1904 with vehicle ${vehicle#1:1}
+open vic for '454545' in dev2 my-app
+open e-draft
+***
+***open localhost for RN-1904 with vehicle ${vehicle#2:1}
+Login to 'http://localhost:41904/' my-app
+open vic for vehicle '123456'
+open e-draft
+***
+***search vehicle ${vehicle#1:1} in billing tabs
+input '559065' into web element '//input[@name="vehicleEnterCell"]'
+click web element '//a[@id="retrievevehicleAction"]'
+***
+***open attach/detach for vehicle ${vehicle#1:1}
+open vehicle inventory for vehicle '559065'
+click web element '//a[contains(text(),"Attach/Detach")]'
+***
+***open MSO for vehicle ${vehicle#2:1}
+open 'single unit in' menu
+input '223344' into web element '//input[@name="searchvehicle"]'
+hit key 'ENTER' into web element '//input[@name="searchvehicle"]'
+click web element '//ul/li/a[.="MSO"]'
+***
+***login to myCompany bitbucket
+open url 'https://bitbucket.org/account/signin/'
+input 'rajeevn@myCompany.com' into web element '//input[@name="username"]'
+input '${cmd 'qMLkVIna9F/zx2AILCyu8g==' decrypt text}' into web element '//input[@name="password"]'
+sleep for '2' second
+hit key 'ENTER' into web element '//input[@name="password"]'
+sleep for '5' second
+***
+***login to myCompany jira
+open url 'https://id.atlassian.com/login'
+input 'rajeevn@myCompany.com' into web element '//input[@id="username"]'
+sleep for '2' second
+hit key 'ENTER' into web element '//input[@id="username"]'
+input '${cmd 'qMLkVIna9F/zx2AILCyu8g==' decrypt text}' into web element '//input[@id="password"]'
+sleep for '2' second
+hit key 'ENTER' into web element '//input[@id="password"]'
+sleep for '5' second
+***
+***open jira ${:id#1:1}
+open url 'https://myCompany.atlassian.net/browse/${jiraid}'
+***
+***create branch for ${jiraid#1:1}
+open jira '${jiraid}'
+click web element '//div[@id="viewissue-devstatus-panel"]//a/span[.="Create branch"]'
+input 'myCompany/rn-project' into web element '//select[@id="id_repository"]'
+sleep for '2' second
+input 'master' into web element '//select[@id="branch-dropdown"]'
+sleep for '2' second
+hit key 'ENTER' into web element '//input[@id="id_branch_name"]'
+wait for page to contain web element '//h1[@class="app-header--heading"]
+***
+***get code for ${:jiraid#1:1;2:1,2}
+Clone repo 'https://rajeevn-myCompany@bitbucket.org/myCompany/rn-project.git' into folder 'D:\development\${jiraid}\'
+switch to '${jiraid}' branch in repo 'D:\development\${jiraid}\'
+***
+***copy intellij files to ${:jiraid#1:1;2:1;3:1}
+cmd.exe /c xcopy D:\development\rn-project\.idea D:\development\${jiraid}\.idea /f /s /e /y
+cmd.exe /c xcopy D:\development\rn-project\rn-project.iml D:\development\${jiraid}\ /f /y
+cmd.exe /c xcopy D:\development\Debug_Server.xml D:\development\${jiraid}\.idea\runConfigurations\ /f /y
+***
+***setup gradle file for ${:jiraid#1:1;2:1,2;3:1,2;4:1,2;5:1,2}
+cmd.exe /c xcopy D:\development\build.gradle D:\development\${jiraid}\ /f /y
+replace 'httpPort = 80' with 'httpPort = 4${cmd in this extract text with match '(\d+)'}' in file 'D:\development\${jiraid}\build.gradle'
+replace 'httpsPort = 443' with 'httpsPort = 3${cmd in this extract text with match '(\d+)'}' in file 'D:\development\${jiraid}\build.gradle'
+replace 'suspend=n,address=5005' with 'suspend=n,address=5${cmd in this extract text with match '(\d+)'}' in file 'D:\development\${jiraid}\build.gradle'
+replace 'value="5005"' with 'value="5${cmd in this extract text with match '(\d+)'}"' in file 'D:\development\${jiraid}\.idea\runConfigurations\Debug_Server.xml'
+***
+***open intellij for jira ${:jiraid#1:1}
+cmd.exe /c "D:\Program Files\IntelliJ IDEA Community Edition 2018.1.2\bin\idea64.exe" D:\development\${jiraid}\
+***
+***setup branch for ${jiraid#2:1}
+login to myCompany jira
+create branch for 'jiraid'
+***
+***setup pod for ${:jiraid#1:1;2:1,2}
+cmd.exe /c mkdir D:\POD\${jiraid}\
+cmd.exe /c echo. 2>D:\POD\${jiraid}\${jiraid}.sql
+***
+***setup code for ${jiraid#1:1;2:1;3:1;4:1}
+get code for 'jiraid'
+copy intellij files to 'jiraid'
+setup gradle file for 'jiraid'
+open intellij for jira 'jiraid'
+***
+***initiate ${jiraid#1:1;2:1;3:1} development
+setup branch for 'jiraid'
+setup code for 'jiraid'
+setup pod for 'jiraid'
+***
+***open localhost for RN-1998
+login to 'localhost:41998' my-app
+open 'reset' menu
+***
+***kill all chrome drivers
+cmd.exe /c taskkill /F /IM chromedriver.exe
+***
+***sync branches
+cmd.exe /c D:\deployment\git-merge.bat from master to RN-2138 in D:\rn-project
+cmd.exe /c D:\deployment\git-merge.bat from master to RN-2000 in D:\rn-project
+cmd.exe /c D:\deployment\git-merge.bat from master to RN-1978 in D:\rn-project
+cmd.exe /c D:\deployment\git-merge.bat from master to RN-2058 in D:\rn-db
+***
+***prepare translate from ${from#4:1} to ${to#5:1}
+open url 'https://www.google.com'
+input 'google translate' into web element '//input[@id="lst-ib"]'
+hit key 'ENTER' into web element '//input[@id="lst-ib"]'
+input 'english' into web element '(//select[contains(@class, "tw-lang-selector")])[1]'
+input 'german' into web element '(//select[contains(@class, "tw-lang-selector")])[3]'
+input 'hello' into web element '//textarea[@id="tw-source-text-ta"]'
+command log 'off'
+***
+***translate ${text#3:1}
+hit key 'CONTROL+a' into web element '//textarea[@id="tw-source-text-ta"]'
+hit key 'DELETE' into web element '//textarea[@id="tw-source-text-ta"]'
+input 'hello' into web element '//textarea[@id="tw-source-text-ta"]'
+sleep for '1' second
+print web element '//pre[@id="tw-target-text"]/span'
+***
+***open my-app for RN-2138
+open 'RN-2138' my-app
+open vic for vehicle '223344'
+click web element '//table/tbody/tr/th[.="Billing"]'
+***
